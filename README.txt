@@ -6,8 +6,23 @@
 Notes:
 1. Chú ý dấu cách
 2. Dữ liệu chữ toàn bộ là lower case
-3. Các dữ liệu hobbies, friends cách nhau bởi dấu ,
+3. Các dữ liệu hobbies, friends cách nhau bởi dấu ','
 
 Ví dụ input chuẩn:
+
+| 4 | huynh bao vu | 1 | FGA.IVI 3 | 45 | 171 | truyen tranh, gym, boi loi, bong ban |1, 2, 3, 7|
+
+-------------------------------------------------------------------------------------------------
+For the use of this project application, please put all the input
+data in the following format:
+
+| <ID> | <name> | <membercode> | <officename> | <age> | <height> | <hobbies> |<personal friends>|
+
+Notes:
+1. Notice all the spacing
+2. All the characters is lower-case
+4. Different hobbies, friends is separated by letter ','
+
+Input example:
 
 | 4 | huynh bao vu | 1 | FGA.IVI 3 | 45 | 171 | truyen tranh, gym, boi loi, bong ban |1, 2, 3, 7|
