@@ -7,8 +7,8 @@
 int main() {
 	Controller* c = new Controller();
 	string rs = "\nKhoi dong ung dung";
+	int m=-1;
 	while (1) {
-		int m;
 		system("cls");
 		cout << "\n------------MANG XA HOI NHAN VIEN------------\n";
 		cout << "\n--------------------MENU---------------------\n";
@@ -23,7 +23,8 @@ int main() {
 		cout << "\n9.Ket ban voi nhan vien khac";
 		cout << "\n0.Thoat";
 		cout << "\n---------------------------------------------\n";
-		cout << "\nStatus: " << rs << endl;
+		rs = (m==4) ? ("\nStatus:" + rs ):("\nStatus:" + rs + "\n");
+		cout << rs;
 		cout << "\n---------------------------------------------\n";
 		cout << "\nNhap lua chon: "; cin >> m;
 		switch (m)
