@@ -16,13 +16,17 @@ public:
 	map<string, set<int>> listSoThich_ID;
 
 	bool checkid(int id);
+	string themNhanVien();
+
 	void sortListtoID();
+
 	void getNhanVienByString(string line);
 
 	string readFile();
 	string writeFile();
 	string viewAllUser();
-	string themNhanVien();
+	
+	//void updateUser();
 	string timNhanVien();
 	string lietKeBanBe();
 	string xoaNhanVien();

@@ -32,7 +32,15 @@ string NhanVien::getHoTen()
 
 void NhanVien::setViTri(int viTri, string i)
 {
+	/*for (;;) {
+		if (viTri == 0 || viTri == 1) {*/
 			this->m_viTri = viTri;
+	/*		break;
+		}
+		else {
+			cout << "Khong dung cu phap, moi nhap lai \n";
+		}
+	}*/
 }
 
 int NhanVien::getViTri()
@@ -73,9 +81,9 @@ void NhanVien::setMotSoThich(string st)
 void NhanVien::setSoThich()
 {
 	string tmp = "";
-	while (tmp != "0") {
+	while (tmp != ".") {
 		getline(cin, tmp);
-		if (tmp != "") if (tmp != "0") this->m_soThich.insert(tmp);
+		if (tmp != "") if (tmp != ".") this->m_soThich.insert(tmp);
 	}
 }
 
@@ -125,22 +133,36 @@ void NhanVien::xoaMotBanBe(int ban)
 }
 
 void NhanVien::set(){
+	
+	/*cout << "Nhap ID: ";
+	cin >> this->m_id;*/
 	cin.ignore();
 	cout << "Nhap ho ten: ";
 	getline(cin, this->m_hoten);
+	/*cout << "Nhap vi tri: ";
+	cin >> this->m_viTri;
+	for (;;) {
+		if (this->m_viTri == 0 || this->m_viTri == 1) {
+			break;
+		}
+		else {
+			cout << "Khong dung cu phap, moi nhap lai: \n";
+			cin >> this->m_viTri;
+		}
+	}*/
 	cout << "Nhap tuoi: ";
 	cin >> this->m_tuoi;
 	for(;;){
 		if (18 < this->m_tuoi < 100)
 			break;
 		else {
-			cout << "Khong dung cu phap (tuoi tu 19->99), moi nhap lai: \n";
+			cout << "Khong dung cu phap, moi nhap lai \n";
 			cin >> this->m_tuoi;
 		}
 	}
 	cout << "Nhap chieu cao(cm): ";
 	cin >> this->m_chieuCao;
-	cout << "Nhap so thich, moi so thich cach nhau boi dau xuong dong (nhap 0 neu muon ket thuc):\n";
+	cout << "Nhap so thich, moi so thich cach nhau boi dau xuong dong (nhap dau . neu muon ket thuc):\n";
 	this->setSoThich();
 }
 

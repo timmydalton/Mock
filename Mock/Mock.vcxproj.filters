@@ -45,15 +45,4 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="User.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="User_long.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="User1.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-  </ItemGroup>
 </Project>

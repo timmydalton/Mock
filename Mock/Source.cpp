@@ -6,82 +6,73 @@
 
 int main() {
 	Controller* c = new Controller();
-	string rs = "\nKhoi dong ung dung";
-	int m=-1;
+	int m = -1;
+	string trangThai = "\nNhap lua chon: ";
+	system("cls");
+	cout << "\n-------MANG XA HOI NHAN VIEN-----------------\n";
 	while (1) {
-		system("cls");
-		cout << "\n------------MANG XA HOI NHAN VIEN------------\n"
-			<< "\n--------------------MENU---------------------\n"
-			<< "\n1.Doc du lieu tu danh sach da luu"
-			<< "\n2.Ghi du lieu vao tep danh sach"
-			<< "\n3.Xem thong tin toan bo nhan vien"
-			<< "\n4.Them nhan vien vao mang xa hoi"
-			<< "\n5.Tim kiem ten nhan vien"
-			<< "\n6.Tim nhan vien theo so thich"
-			<< "\n7.Liet ke ban cua nhan vien theo ID"
-			<< "\n8.Xoa nhan vien khoi mang xa hoi"
-			<< "\n9.Ket ban voi nhan vien khac"
-			<< "\n0.Thoat"
-			<< "\n---------------------------------------------\n";
-		rs = (m==4) ? ("\nStatus:" + rs ):("\nStatus:" + rs + "\n");
-		cout << rs;
-		cout << "\n---------------------------------------------\n"
-			<< "\nNhap lua chon: ";
-		cin >> m;
+		cout << "\n--------Menu------------------------------: \n";
+		cout << "\n1. Doc du lieu tu danh sach da luu---------";
+		cout << "\n2. Ghi du lieu vao tep danh sach-----------";
+		cout << "\n3. Xem thong tin toan bo nhan vien---------";
+		cout << "\n4. Them nhan vien vao mang xa hoi----------";
+		cout << "\n5. Tim kiem ten nhan vien------------------";
+		cout << "\n6. Tim nhan vien theo so thich-------------";
+		cout << "\n7. Liet ke ban cua nhan vien theo ID-------";
+		cout << "\n8. Xoa nhan vien khoi mang xa hoi----------";
+		cout << "\n9. Ket ban voi nhan vien khac--------------";
+		cout << "\n0. Thoat-----------------------------------";
+		cout << "\n-------------------------------------------\n";
+		
+		cout << trangThai; cin >> m;
 		switch (m)
 		{
 		case 1: {
-			rs = c->readFile();
+			cout << c->readFile();
 			break;
 		}
 		case 2: {
-			rs = c->writeFile();
+			cout << c->writeFile();
 			break;
 		}
 		case 3: {
-			rs = c->viewAllUser();
-			cin.ignore();
-			cin.ignore();
+			cout << c->viewAllUser();
 			break;
 		}
 		case 4: {
-			rs = c->themNhanVien();
+			cout << c->themNhanVien();
 			c->sortListtoID();
 			break;
 		}
 		case 5: {
-			rs = c->timNhanVien();
-			cin.ignore();
+			cout << c->timNhanVien();
 			break;
 		}
 		case 6: {
-			rs = c->timTheoSoThich();
-			cin.ignore();
+			cout << c->timTheoSoThich();
 			break;
 		}
 		case 7: {
-			rs = c->lietKeBanBe();
-			cin.ignore();
-			cin.ignore();
+			cout << c->lietKeBanBe();
 			break;
 		}
 		case 8: {
-			rs = c->xoaNhanVien();
+			cout << c->xoaNhanVien();
 			break;
 		}
 		case 9: {
 			int idBan;
-			cout << "\n---------------THEM BAN BE-----------------\n";
+			cout << "\n------------Them ban be-------------\n";
 			cout << "\nNhap vao ID nguoi can ket ban: ";
 			cin >> idBan;
-			rs = c->themBanBe(idBan);
+			cout << c->themBanBe(idBan);
 			break;
 		}
 		case 0: {
 			return 0;
 		}
 		default: {
-			rs = "Nhap sai cu phap, moi nhap lai. ";
+			cout << "Nhap sai cu phap, moi nhap lai. " << endl;
 			break;
 		}
 		}

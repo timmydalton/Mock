@@ -1,23 +1,12 @@
 ﻿#include "Controller.h"
 
-//Support function
+
 bool Controller::checkid(int id)
 {
 	for (auto i = listNV.begin(); i != listNV.end(); i++) {
 		if ((*i)->getID() == id) return false;
 	}
 	return true;
-}
-
-void Controller::sortListtoID()
-{
-	for (int i = 0; i < listNV.size(); i++) {
-		for (int j = listNV.size() - 1; j > i; j--) {
-			if (listNV[j]->getID() < listNV[i]->getID()) {
-				swap(listNV[i], listNV[j]);
-			}
-		}
-	}
 }
 
 void Controller::getNhanVienByString(string line)
@@ -44,6 +33,7 @@ void Controller::getNhanVienByString(string line)
 	temp = "";
 
 	if (stoi(x[2]) == 1) {
+		/*static_cast<NVChinhThuc*>(nv)->setDonVi(x.at(3));*/
 		nv = new NVChinhThuc();
 		nv->setID(stoi(x[0]));
 		nv->setHoTen(x[1]);
@@ -76,6 +66,7 @@ void Controller::getNhanVienByString(string line)
 		temp = "";
 	}
 	else if (stoi(x.at(2)) == 0) {
+		/*static_cast<Fresher*>(nv)->setLopHoc(x.at(3));*/
 		nv = new Fresher();
 		nv->setID(stoi(x[0]));
 		nv->setHoTen(x[1]);
@@ -110,15 +101,85 @@ void Controller::getNhanVienByString(string line)
 	listNV.push_back(nv);
 }
 
-//Main function
-//1
+void Controller::sortListtoID()
+{
+	/*sort(listNV[0]->getID(), listNV[listNV.size()-1]->getID());*/
+	for (int i = 0; i < listNV.size(); i++) {
+		for (int j = listNV.size() - 1; j > i; j--) {
+			if (listNV[j]->getID() < listNV[i]->getID()) {
+				swap(listNV[i], listNV[j]);
+			}
+		}
+	}
+}
+
+string Controller::themNhanVien()
+{
+	NhanVien *nv = new NhanVien();
+	int chon, id;
+	/*for (int i = 0; i < n; i++) {*/
+	cout << "\n----------Them mot nhan vien---------------\n";
+	cout << "\nNhap thong tin nhan vien: " << endl;
+	cout << "\n0.---Nhap thong tin fresher----------------";
+	cout << "\n1.---Nhap thong tin nhan vien chinh thuc---";
+	cout << "\n2.---Thoat---";
+	cout << "\n-------------------------------------------\n";
+	cout << "Nhap lua chon: "; cin >> chon;
+	switch (chon)
+	{
+	case 0: {
+		cout << "Nhap ID: "; cin >> id;
+		while (!checkid(id)) {
+			cout << "ID da co trong danh sach nguoi dung. Moi nhap lai: \n";
+			cin >> id;
+		}
+		nv = new Fresher();
+		nv->setViTri(0, "");
+		nv->setID(id);
+		nv->set();
+		listNV.push_back(nv);
+		themBanBe(nv->getID());
+		//sortListtoID();
+		return "Nhan vien da nhap: \n" + nv->get();
+		break;
+	}
+	case 1: {
+		cout << "Nhap ID: "; cin >> id;
+		while (!checkid(id)) {
+			cout << "ID da co trong danh sach nguoi dung. Moi nhap lai: \n";
+			cin >> id;
+		}
+		nv = new NVChinhThuc();
+		nv->setViTri(1, "");
+		nv->setID(id);
+		nv->set();
+		listNV.push_back(nv);
+		themBanBe(nv->getID());
+		//sortListtoID();
+		return "Nhan vien da nhap: \n" + nv->get();
+		break;
+	}
+	case 2: {
+		delete(nv);
+		return "\nQuay lai menu...";
+		break;
+	}
+	default:
+		return "\nSai cu phap, quay lai menu...\n";
+		break;
+	}
+	return "\nDa them nhan vien thanh cong\n";
+	/*}*/
+}
+
+
 string Controller::readFile()
 {
 	ifstream file;
 	string line = "";
 	file.open("User.txt", ios::in); //đổi tên file thành User_long.txt
 									//nếu muốn danh sách dữ liệu có nhiều nhân viên
-	if (!file) return "\nKhong co file du lieu";
+	if (!file) return "Khong co file du lieu\n";
 	//else if (file) {
 	//	file.open("User1.txt", ios::in);
 	//	if (!file) return "Khong co file du lieu:";
@@ -140,7 +201,7 @@ string Controller::readFile()
 	else {
 		while (!file.eof()) {
 			getline(file, line);
-
+			
 			if (line[0] == '|') {
 				getNhanVienByString(line);
 			}
@@ -148,85 +209,85 @@ string Controller::readFile()
 		//for (int i = 0; i < listNV.size(); i++) {
 		//	listNV[i]->get();
 		//} hàm kiểm tra in toàn bộ những gì đã đọc từ file
-		return "\nDoc danh sach du lieu thanh cong (chi nen doc 1 lan)";
+		return "\nDoc danh sach du lieu thanh cong\n";
 	}
 }
-//2
+
 string Controller::writeFile()
 {
 	if (listNV.empty()) {
-		return "\nKhong co du lieu de ghi vao danh sach";
+		return "Khong co du lieu de ghi vao danh sach\n";
 	}
 	ofstream file;
 	file.open("User1.txt", ios::out | ios::trunc);
 	for (auto i = listNV.begin(); i != listNV.end(); i++) {
 		file << (*i)->get();
 	}
-	return "Da ghi ra file du lieu thanh cong";
+	return "Da ghi ra file du lieu thanh cong\n";
 }
-//3
+
 string Controller::viewAllUser()
 {
-	if (listNV.empty()) return "\nKhong co du lieu";
+	if (listNV.empty()) return "\nKhong co du lieu\n";
 	else {
-		cout << "\n-------------DANH SACH NHAN VIEN-------------\n\n";
+		cout << "\n-------------Danh sach nhan vien-----------\n\n";
 		for (int i = 0; i < listNV.size(); i++) {
 			cout << listNV[i]->get();
 		}
-		cout << "\n----------------END OF RESULT----------------\n"
-			<< "\n-> Press Enter to go back to MENU...";
-		return "\nBan vua in danh sach nhan vien";
+		cout << "\n-------------Ket thuc danh sach------------\n";
+		return "\nDa in ra tat ca nhan vien trong chuong trinh\n";
 	}
+	//hàm sau để đọc dữ liệu từ file
+	ifstream file;
+	string line = "";
+	file.open("User.txt", ios::in);
+	if (!file) return "\nKhong co file du lieu\n";
+	else {
+		while (!file.eof()) {
+			getline(file, line);
+			cout << line << endl;
+		}
+	}
+	file.close();
+	return "\nDa in ra tat ca nhan vien trong file du lieu\n";
 }
-//4
-string Controller::themNhanVien()
+
+string Controller::themBanBe(int idNguoiKB)
 {
-	NhanVien *nv = new NhanVien();
-	int chon, id;
-	cout << "\n----------THEM MOI MOT NHAN VIEN-----------\n";
-	cout << "\nNhap thong tin nhan vien:\n" << endl;
-	cout << "\n0.Nhap thong tin fresher";
-	cout << "\n1.Nhap thong tin nhan vien chinh thuc";
-	cout << "\n2.---Thoat---";
-	cout << "\n------------------------------------\n";
-	cout << "Nhap lua chon: "; cin >> chon;
-	cout << "Nhap ID: "; cin >> id;
-	while (!checkid(id)) {
-		cout << "ID da co trong danh sach nguoi dung. Moi nhap lai: ";
+	int id = -1, index = -1;
+	if (checkid(idNguoiKB)) return "\nID khong hop le\n";
+	for (int i = 0; i < listNV.size(); i++) {
+		if (listNV[i]->getID() == idNguoiKB) {
+			index = i;
+			break;
+		}
+	}
+	cout << "Nhap ID ban be (Nhap ID chinh minh neu muon ket thuc): \n";
+	while (id != idNguoiKB){
 		cin >> id;
+		if (!checkid(id)) {
+			if (id == idNguoiKB) continue;
+ 			listNV[index]->setMotBanBe(id);
+			for (int i = 0; i < listNV.size(); i++) {
+				if (listNV[i]->getID() == id) {
+					listNV[i]->setMotBanBe(listNV[index]->getID());
+					break;
+				}
+			}
+		}
+		else cout << "\nID khong ton tai. Moi nhap lai. \n";
 	}
-	if (chon == 0) {
-		nv = new Fresher();
-		nv->setViTri(0, "");
-		nv->setID(id);
-		nv->set();
-		listNV.push_back(nv);
-		themBanBe(nv->getID());
-		return "Nhan vien da nhap: \n" + nv->get();
-	}
-	else if (chon == 1) {
-		nv = new NVChinhThuc();
-		nv->setViTri(1, "");
-		nv->setID(id);
-		nv->set();
-		listNV.push_back(nv);
-		themBanBe(nv->getID());
-		return "Nhan vien da nhap: \n" + nv->get();
-	}
-	else if (chon == 2) {
-		delete(nv);
-	}
-	return "Quay lai menu\n";
+	return "\nDa them ban be thanh cong!\n";
 }
-//5
+
 string Controller::timNhanVien()
 {
 	cin.ignore();
 	string ten = "";
-	cout << "\n--------TIM KIEM NHAN VIEN THEO TEN--------\n";
-	cout << "\nNhap vao ten nguoi can tim: ";
+	cout << "\n--------Tim kiem nhan vien theo ten--------\n";
+	cout << "\nNhap vao ten nguoi can tim: \n";
 	getline(cin, ten);
-	cout << "\n--------------KET QUA TIM KIEM-------------\n\n";
+	cout << "\n--------Ket qua tim kiem: -----------------\n";
 	for (auto i = listNV.begin(); i != listNV.end(); i++) {
 		for (int j = 0; j < (*i)->getHoTen().size(); j++) {
 			if (ten == (*i)->getHoTen().substr(j, j+ten.size())) {
@@ -234,22 +295,76 @@ string Controller::timNhanVien()
 			}
 		}
 	}
-	cout << "\n----------------END OF RESULT----------------\n"
-		<< "\n-> Press Enter to go back to MENU...";
-	return "\nDa thuc hien tim kiem voi ten nhap vao";
+	cout << "\n--------Ket thuc danh sach-----------------\n";
+	return "\nDa thuc hien tim kiem voi ten nhap vao\n";
 }
-//6
+
+string Controller::lietKeBanBe()
+{
+	int id;
+	cout << "\n---------Liet ke danh sach ban be----------\n";
+	cout << "\nNhap vao ID nguoi can liet ke (nhap -1 de thoat): \n";
+	cin >> id;
+	if (id == -1) return "\nQuay lai menu";
+	else if (checkid(id)) return "\nID khong hop le\n";
+	else {
+		cout << "\n------Danh sach ban be cua " << id << ": -------\n";
+		for (auto i = listNV.begin(); i != listNV.end(); i++) {
+			if ((*i)->getID() == id) {
+				set<int> temp = (*i)->getBanBe();
+				cout << (*i)->getStringBanBe() << endl;
+				for (auto j = temp.begin(); j != temp.end(); j++) {
+					for (auto k = listNV.begin(); k != listNV.end(); k++) {
+						if ((*k)->getID() == (*j)) {
+							cout << (*k)->get();
+						}
+					}
+				}
+				return "\nDa liet ke danh sach ban be\n";
+			}
+		}
+	}
+	//return string();
+}
+
+string Controller::xoaNhanVien()
+{
+	int id;
+	cout << "\n--------------Xoa nhan vien----------------\n";
+	cout << "\nNhap vao ID nguoi can xoa (nhap -1 de thoat): \n";
+	cin >> id;
+	if (id == -1) return "\nQuay lai menu";
+	else if (checkid(id)) return "\nID khong hop le\n";
+	else {
+		for (auto i = listNV.begin(); i != listNV.end(); i++) {
+			if ((*i)->getID() == id) {
+				set<int> temp = (*i)->getBanBe();
+				for (auto j = temp.begin(); j != temp.end(); j++) {
+					for (auto k = listNV.begin(); k != listNV.end(); k++) {
+						if ((*k)->getID() == (*j)) {
+							(*k)->xoaMotBanBe(id);
+						}
+					}
+				}
+				listNV.erase(i);
+				return "\nDa xoa nhan vien voi ID " + to_string(id);
+			}
+		}
+	}
+}
+
 string Controller::timTheoSoThich()
 {
 	set<string> soThich;
 	string input = "";
-	cout << "\n-----TIM KIEM NHAN VIEN THEO SO THICH------\n";
+	cout << "\n-----Tim nhan vien theo so thich--------\n";
 	cout << "\nNhap vao so thich can tim, nhap 0 neu muon ket thuc: \n";
 	while (input != "0") {
 		getline(cin, input);
 		soThich.insert(input);
 	}
-	cout << "\n--------------KET QUA TIM KIEM-------------\n\n";
+	if (soThich.empty()) return "Tro ve menu...\n";
+	cout << "---Danh sach ket qua---\n";
 	for (auto i = listNV.begin(); i != listNV.end(); i++) {
 		set<string> dsSoThichTheoNV = (*i)->getSoThich();
 		bool status = false;
@@ -264,91 +379,7 @@ string Controller::timTheoSoThich()
 			if (status) break;
 		}
 	}
-	cout << "\n----------------END OF RESULT----------------\n"
-		<< "\n-> Press Enter to go back to MENU...";
-	return "\nDa thuc hien tim kiem voi so thich";
-}
-//7
-string Controller::lietKeBanBe()
-{
-	int id;
-	cout << "\n---------LIET KE DANH SACH BAN BE----------\n";
-	cout << "\nNhap vao ID nguoi can liet ke (nhap -1 de thoat): ";
-	cin >> id;
-	if (id == -1) return "\nQuay lai menu";
-	else if (checkid(id)) return "\nID khong hop le";
-	else {
-		cout << "\n--------------KET QUA TIM KIEM-------------\n\n";
-		cout << "Danh sach ban be cua " << id << ": \n";
-		for (auto i = listNV.begin(); i != listNV.end(); i++) {
-			if ((*i)->getID() == id) {
-				set<int> temp = (*i)->getBanBe();
-				cout << (*i)->getStringBanBe() << "\n\n";
-				for (auto j = temp.begin(); j != temp.end(); j++) {
-					for (auto k = listNV.begin(); k != listNV.end(); k++) {
-						if ((*k)->getID() == (*j)) {
-							cout << (*k)->get();
-						}
-					}
-				}
-				cout << "\n----------------END OF RESULT----------------\n"
-					<< "\n-> Press Enter to go back to MENU...";
-				return "\nDa liet ke danh sach ban be";
-			}
-		}
-	}
-}
-//8
-string Controller::xoaNhanVien()
-{
-	int id;
-	cout << "\n--------------XOA NHAN VIEN----------------\n";
-	cout << "\nNhap vao ID nguoi can xoa (nhap -1 de thoat): ";
-	cin >> id;
-	if (id == -1) return "\nQuay lai menu";
-	else if (checkid(id)) return "\nID khong hop le";
-	else {
-		for (auto i = listNV.begin(); i != listNV.end(); i++) {
-			if ((*i)->getID() == id) {
-				set<int> temp = (*i)->getBanBe();
-				for (auto j = temp.begin(); j != temp.end(); j++) {
-					for (auto k = listNV.begin(); k != listNV.end(); k++) {
-						if ((*k)->getID() == (*j)) {
-							(*k)->xoaMotBanBe(id);
-						}
-					}
-				}
-				listNV.erase(i);
-				return "\nDa xoa nhan vien mang ID: " + to_string(id);
-			}
-		}
-	}
-}
-//9
-string Controller::themBanBe(int idNguoiKB)
-{
-	int id = -1, index = -1;
-	for (int i = 0; i < listNV.size(); i++) {
-		if (listNV[i]->getID() == idNguoiKB) {
-			index = i;
-			break;
-		}
-	}
-	cout << "\nNhap ID ban be (Nhap ID chinh minh neu muon ket thuc): ";
-	while (id != idNguoiKB) {
-		cin >> id;
-		if (!checkid(id)) {
-			if (id == idNguoiKB) continue;
-			listNV[index]->setMotBanBe(id);
-			for (int i = 0; i < listNV.size(); i++) {
-				if (listNV[i]->getID() == id) {
-					listNV[i]->setMotBanBe(listNV[index]->getID());
-					break;
-				}
-			}
-		}
-		else cout << "ID khong ton tai. Moi nhap lai: ";
-	}
-	return "\nDa them ban be thanh cong!!!";
+	cout << "\n-----Ket thuc danh sach-----------------\n";
+	return "\nDa thuc hien tim kiem voi so thich\n";
 }
 
