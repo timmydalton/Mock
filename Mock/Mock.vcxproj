@@ -151,6 +151,11 @@
     <ClCompile Include="NVChinhThuc.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="User.txt" />
+    <Text Include="User1.txt" />
+    <Text Include="User_long.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
