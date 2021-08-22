@@ -1,6 +1,6 @@
 ﻿#include "Controller.h"
 
-
+//Các hàm hỗ trợ
 bool Controller::checkid(int id)
 {
 	for (auto i = listNV.begin(); i != listNV.end(); i++) {
@@ -113,6 +113,95 @@ void Controller::sortListtoID()
 	}
 }
 
+//Các hàm chức năng của chương trình
+//1
+string Controller::readFile()
+{
+	ifstream file;
+	string line = "";
+	file.open("User.txt", ios::in); //đổi tên file thành User_long.txt
+									//nếu muốn danh sách dữ liệu có nhiều nhân viên
+	if (!file) return "\nKhong co file du lieu";
+	//else if (file) {
+	//	file.open("User1.txt", ios::in);
+	//	if (!file) return "Khong co file du lieu:";
+	//	else {
+	//		while (!file.eof()) {
+	//			getline(file, line);
+
+	//			if (line[0] == '|') {
+	//				getNhanVienByString(line);
+	//			}
+	//		}
+	//		//for (int i = 0; i < listNV.size(); i++) {
+	//		//	listNV[i]->get();
+	//		//}
+	//		return "Doc danh sach du lieu thanh cong";
+	//	}
+	//} Bỏ comment phần này nếu muốn chỉ đọc file dữ liệu gốc 
+	//  đọc và thực hiện các hành động với file User1.txt
+	else {
+		while (!file.eof()) {
+			getline(file, line);
+
+			if (line[0] == '|') {
+				getNhanVienByString(line);
+			}
+		}
+		//for (int i = 0; i < listNV.size(); i++) {
+		//	listNV[i]->get();
+		//} hàm kiểm tra in toàn bộ những gì đã đọc từ file
+		return "\nDoc danh sach du lieu thanh cong";
+	}
+}
+
+//2
+string Controller::writeFile()
+{
+	if (listNV.empty()) {
+		return "Khong co du lieu de ghi vao danh sach\n";
+	}
+	ofstream file;
+	file.open("User1.txt", ios::out | ios::trunc);
+	for (auto i = listNV.begin(); i != listNV.end(); i++) {
+		file << (*i)->get();
+	}
+	return "\nDa ghi ra file du lieu thanh cong";
+}
+
+//3
+string Controller::viewAllUser()
+{
+	if (listNV.empty()) {
+		cout << "Khong co du lieu\n"
+			<< "-> Nhan Enter de tro ve Menu...";
+		return "\nKhong co du lieu";
+	}
+	else {
+		cout << "\n-------------Danh sach nhan vien-----------\n\n";
+		for (int i = 0; i < listNV.size(); i++) {
+			cout << listNV[i]->get();
+		}
+		cout << "\n-------------Ket thuc danh sach------------\n"
+			<< "\n-> Nhan Enter de tro ve Menu...";
+		return "\nDa in ra tat ca nhan vien trong chuong trinh";
+	}
+	//hàm sau để đọc dữ liệu từ file nếu thực thi trên User.txt
+	ifstream file;
+	string line = "";
+	file.open("User.txt", ios::in);
+	if (!file) return "\nKhong co file du lieu";
+	else {
+		while (!file.eof()) {
+			getline(file, line);
+			cout << line << endl;
+		}
+	}
+	file.close();
+	return "\nDa in ra tat ca nhan vien trong file du lieu";
+}
+
+//4
 string Controller::themNhanVien()
 {
 	NhanVien *nv = new NhanVien();
@@ -140,7 +229,7 @@ string Controller::themNhanVien()
 		listNV.push_back(nv);
 		themBanBe(nv->getID());
 		//sortListtoID();
-		return "Nhan vien da nhap: \n" + nv->get();
+		return "\nNhan vien da nhap: \n" + nv->get();
 		break;
 	}
 	case 1: {
@@ -156,106 +245,147 @@ string Controller::themNhanVien()
 		listNV.push_back(nv);
 		themBanBe(nv->getID());
 		//sortListtoID();
-		return "Nhan vien da nhap: \n" + nv->get();
+		return "\nNhan vien da nhap: \n" + nv->get();
 		break;
 	}
 	case 2: {
 		delete(nv);
-		return "\nQuay lai menu...";
+		return "\nQuay lai menu...\n";
 		break;
 	}
 	default:
 		return "\nSai cu phap, quay lai menu...\n";
 		break;
 	}
-	return "\nDa them nhan vien thanh cong\n";
+	return "\nDa them nhan vien thanh cong";
 	/*}*/
 }
 
-
-string Controller::readFile()
+//5
+string Controller::timNhanVien()
 {
-	ifstream file;
-	string line = "";
-	file.open("User.txt", ios::in); //đổi tên file thành User_long.txt
-									//nếu muốn danh sách dữ liệu có nhiều nhân viên
-	if (!file) return "Khong co file du lieu\n";
-	//else if (file) {
-	//	file.open("User1.txt", ios::in);
-	//	if (!file) return "Khong co file du lieu:";
-	//	else {
-	//		while (!file.eof()) {
-	//			getline(file, line);
-
-	//			if (line[0] == '|') {
-	//				getNhanVienByString(line);
-	//			}
-	//		}
-	//		//for (int i = 0; i < listNV.size(); i++) {
-	//		//	listNV[i]->get();
-	//		//}
-	//		return "Doc danh sach du lieu thanh cong";
-	//	}
-	//} Bỏ comment phần này nếu muốn chỉ đọc file dữ liệu gốc 
-	//  đọc và thực hiện các hành động với file User1.txt
-	else {
-		while (!file.eof()) {
-			getline(file, line);
-			
-			if (line[0] == '|') {
-				getNhanVienByString(line);
+	cin.ignore();
+	string ten = "";
+	cout << "\n--------Tim kiem nhan vien theo ten--------\n";
+	cout << "\nNhap vao ten nguoi can tim: \n";
+	getline(cin, ten);
+	cout << "\n--------Ket qua tim kiem: -----------------\n";
+	for (auto i = listNV.begin(); i != listNV.end(); i++) {
+		for (int j = 0; j < (*i)->getHoTen().size(); j++) {
+			if (ten == (*i)->getHoTen().substr(j, j + ten.size())) {
+				cout << (*i)->get();
 			}
 		}
-		//for (int i = 0; i < listNV.size(); i++) {
-		//	listNV[i]->get();
-		//} hàm kiểm tra in toàn bộ những gì đã đọc từ file
-		return "\nDoc danh sach du lieu thanh cong\n";
 	}
+	cout << "\n--------Ket thuc danh sach-----------------\n"
+		<< "\n-> Nhan Enter de tro ve Menu...";
+	return "\nDa thuc hien tim kiem voi ten nhap vao";
 }
 
-string Controller::writeFile()
+//6
+string Controller::timTheoSoThich()
 {
-	if (listNV.empty()) {
-		return "Khong co du lieu de ghi vao danh sach\n";
+	set<string> soThich;
+	string input = "";
+	cout << "\n-----Tim nhan vien theo so thich--------\n";
+	cout << "\nNhap vao so thich can tim, moi so thich cach nhau 1 dong\n"
+		<< "nhap dau . sau khi nhap xong so thich: \n";
+	while (input != ".") {
+		getline(cin, input);
+		soThich.insert(input);
 	}
-	ofstream file;
-	file.open("User1.txt", ios::out | ios::trunc);
+	if (soThich.empty()) return "Tro ve menu...\n";
+	cout << "-----Danh sach ket qua--------------------\n";
 	for (auto i = listNV.begin(); i != listNV.end(); i++) {
-		file << (*i)->get();
+		set<string> dsSoThichTheoNV = (*i)->getSoThich();
+		bool status = false;
+		for (auto k = dsSoThichTheoNV.begin(); k != dsSoThichTheoNV.end(); k++) {
+			for (auto j = soThich.begin(); j != soThich.end(); j++) {
+				if ((*j) == (*k)) {
+					cout << (*i)->get();
+					status = true;
+					break;
+				}
+			}
+			if (status) break;
+		}
 	}
-	return "Da ghi ra file du lieu thanh cong\n";
+	cout << "\n-----Ket thuc danh sach-----------------\n"
+		<< "\n-> Nhan Enter de tro ve Menu...";
+	return "\nDa thuc hien tim kiem voi so thich";
 }
 
-string Controller::viewAllUser()
+//7
+string Controller::lietKeBanBe()
 {
-	if (listNV.empty()) return "\nKhong co du lieu\n";
-	else {
-		cout << "\n-------------Danh sach nhan vien-----------\n\n";
-		for (int i = 0; i < listNV.size(); i++) {
-			cout << listNV[i]->get();
-		}
-		cout << "\n-------------Ket thuc danh sach------------\n";
-		return "\nDa in ra tat ca nhan vien trong chuong trinh\n";
+	int id;
+	cout << "\n---------Liet ke danh sach ban be----------\n";
+	cout << "\nNhap vao ID nguoi can liet ke (nhap -1 de thoat): \n";
+	cin >> id;
+	if (id == -1) {
+		cout << "Ban da chon thoat khoi chuc nang \n"
+			<< "-> Nhan Enter de tro ve Menu...";
+		return "\nQuay lai menu";
 	}
-	//hàm sau để đọc dữ liệu từ file
-	ifstream file;
-	string line = "";
-	file.open("User.txt", ios::in);
-	if (!file) return "\nKhong co file du lieu\n";
+	else if (checkid(id)) {
+		cout << "ID khong hop le.\n"
+			<< "\n-> Nhan Enter de tro ve Menu...";
+		return "\nID khong hop le";
+	}
 	else {
-		while (!file.eof()) {
-			getline(file, line);
-			cout << line << endl;
+		cout << "\n------Danh sach ban be cua " << id << ": -------\n";
+		for (auto i = listNV.begin(); i != listNV.end(); i++) {
+			if ((*i)->getID() == id) {
+				set<int> temp = (*i)->getBanBe();
+				cout << (*i)->getStringBanBe() << endl;
+				for (auto j = temp.begin(); j != temp.end(); j++) {
+					for (auto k = listNV.begin(); k != listNV.end(); k++) {
+						if ((*k)->getID() == (*j)) {
+							cout << (*k)->get();
+						}
+					}
+				}
+				cout << "\n--------Ket thuc danh sach-----------------\n"
+					<< "\n-> Nhan Enter de tro ve Menu...";
+				return "\nDa liet ke danh sach ban be";
+			}
 		}
 	}
-	file.close();
-	return "\nDa in ra tat ca nhan vien trong file du lieu\n";
+	//return string();
 }
 
+//8
+string Controller::xoaNhanVien()
+{
+	int id;
+	cout << "\n--------------Xoa nhan vien----------------\n";
+	cout << "\nNhap vao ID nguoi can xoa (nhap -1 de thoat): \n";
+	cin >> id;
+	if (id == -1) return "\nQuay lai menu";
+	else if (checkid(id)) return "\nID khong hop le";
+	else {
+		for (auto i = listNV.begin(); i != listNV.end(); i++) {
+			if ((*i)->getID() == id) {
+				set<int> temp = (*i)->getBanBe();
+				for (auto j = temp.begin(); j != temp.end(); j++) {
+					for (auto k = listNV.begin(); k != listNV.end(); k++) {
+						if ((*k)->getID() == (*j)) {
+							(*k)->xoaMotBanBe(id);
+						}
+					}
+				}
+				listNV.erase(i);
+				return "\nDa xoa nhan vien voi ID " + to_string(id);
+			}
+		}
+	}
+}
+
+//9
 string Controller::themBanBe(int idNguoiKB)
 {
 	int id = -1, index = -1;
-	if (checkid(idNguoiKB)) return "\nID khong hop le\n";
+	if (checkid(idNguoiKB)) return "\nID khong hop le";
 	for (int i = 0; i < listNV.size(); i++) {
 		if (listNV[i]->getID() == idNguoiKB) {
 			index = i;
@@ -277,109 +407,5 @@ string Controller::themBanBe(int idNguoiKB)
 		}
 		else cout << "\nID khong ton tai. Moi nhap lai. \n";
 	}
-	return "\nDa them ban be thanh cong!\n";
+	return "\nDa them ban be thanh cong!";
 }
-
-string Controller::timNhanVien()
-{
-	cin.ignore();
-	string ten = "";
-	cout << "\n--------Tim kiem nhan vien theo ten--------\n";
-	cout << "\nNhap vao ten nguoi can tim: \n";
-	getline(cin, ten);
-	cout << "\n--------Ket qua tim kiem: -----------------\n";
-	for (auto i = listNV.begin(); i != listNV.end(); i++) {
-		for (int j = 0; j < (*i)->getHoTen().size(); j++) {
-			if (ten == (*i)->getHoTen().substr(j, j+ten.size())) {
-				cout << (*i)->get();
-			}
-		}
-	}
-	cout << "\n--------Ket thuc danh sach-----------------\n";
-	return "\nDa thuc hien tim kiem voi ten nhap vao\n";
-}
-
-string Controller::lietKeBanBe()
-{
-	int id;
-	cout << "\n---------Liet ke danh sach ban be----------\n";
-	cout << "\nNhap vao ID nguoi can liet ke (nhap -1 de thoat): \n";
-	cin >> id;
-	if (id == -1) return "\nQuay lai menu";
-	else if (checkid(id)) return "\nID khong hop le\n";
-	else {
-		cout << "\n------Danh sach ban be cua " << id << ": -------\n";
-		for (auto i = listNV.begin(); i != listNV.end(); i++) {
-			if ((*i)->getID() == id) {
-				set<int> temp = (*i)->getBanBe();
-				cout << (*i)->getStringBanBe() << endl;
-				for (auto j = temp.begin(); j != temp.end(); j++) {
-					for (auto k = listNV.begin(); k != listNV.end(); k++) {
-						if ((*k)->getID() == (*j)) {
-							cout << (*k)->get();
-						}
-					}
-				}
-				return "\nDa liet ke danh sach ban be\n";
-			}
-		}
-	}
-	//return string();
-}
-
-string Controller::xoaNhanVien()
-{
-	int id;
-	cout << "\n--------------Xoa nhan vien----------------\n";
-	cout << "\nNhap vao ID nguoi can xoa (nhap -1 de thoat): \n";
-	cin >> id;
-	if (id == -1) return "\nQuay lai menu";
-	else if (checkid(id)) return "\nID khong hop le\n";
-	else {
-		for (auto i = listNV.begin(); i != listNV.end(); i++) {
-			if ((*i)->getID() == id) {
-				set<int> temp = (*i)->getBanBe();
-				for (auto j = temp.begin(); j != temp.end(); j++) {
-					for (auto k = listNV.begin(); k != listNV.end(); k++) {
-						if ((*k)->getID() == (*j)) {
-							(*k)->xoaMotBanBe(id);
-						}
-					}
-				}
-				listNV.erase(i);
-				return "\nDa xoa nhan vien voi ID " + to_string(id);
-			}
-		}
-	}
-}
-
-string Controller::timTheoSoThich()
-{
-	set<string> soThich;
-	string input = "";
-	cout << "\n-----Tim nhan vien theo so thich--------\n";
-	cout << "\nNhap vao so thich can tim, nhap 0 neu muon ket thuc: \n";
-	while (input != "0") {
-		getline(cin, input);
-		soThich.insert(input);
-	}
-	if (soThich.empty()) return "Tro ve menu...\n";
-	cout << "---Danh sach ket qua---\n";
-	for (auto i = listNV.begin(); i != listNV.end(); i++) {
-		set<string> dsSoThichTheoNV = (*i)->getSoThich();
-		bool status = false;
-		for (auto k = dsSoThichTheoNV.begin(); k != dsSoThichTheoNV.end(); k++) {
-			for (auto j = soThich.begin(); j != soThich.end(); j++) {
-				if ((*j) == (*k)) {
-					cout << (*i)->get();
-					status = true;
-					break;
-				}
-			}
-			if (status) break;
-		}
-	}
-	cout << "\n-----Ket thuc danh sach-----------------\n";
-	return "\nDa thuc hien tim kiem voi so thich\n";
-}
-

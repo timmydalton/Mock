@@ -162,7 +162,8 @@ void NhanVien::set(){
 	}
 	cout << "Nhap chieu cao(cm): ";
 	cin >> this->m_chieuCao;
-	cout << "Nhap so thich, moi so thich cach nhau boi dau xuong dong (nhap dau . neu muon ket thuc):\n";
+	cout << "Nhap so thich, moi so thich cach nhau mot dong\n"
+		<< "Nhap dau . neu muon ket thuc: \n";
 	this->setSoThich();
 }
 

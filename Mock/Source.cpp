@@ -7,10 +7,10 @@
 int main() {
 	Controller* c = new Controller();
 	int m = -1;
-	string trangThai = "\nNhap lua chon: ";
-	system("cls");
-	cout << "\n-------MANG XA HOI NHAN VIEN-----------------\n";
+	string trangThai = "\nKhoi dong ung dung";
 	while (1) {
+		system("cls");
+		cout << "\n-------MANG XA HOI NHAN VIEN-----------------\n";
 		cout << "\n--------Menu------------------------------: \n";
 		cout << "\n1. Doc du lieu tu danh sach da luu---------";
 		cout << "\n2. Ghi du lieu vao tep danh sach-----------";
@@ -24,40 +24,52 @@ int main() {
 		cout << "\n0. Thoat-----------------------------------";
 		cout << "\n-------------------------------------------\n";
 		
-		cout << trangThai; cin >> m;
+		trangThai = (m == 4) ? ("\nTrang thai: " + trangThai) : ("\nTrang thai: " + trangThai + "\n");
+		cout << trangThai;
+		cout << "\n---------------------------------------------\n"
+			<< "\nNhap lua chon: ";
+		cin >> m;
 		switch (m)
 		{
 		case 1: {
-			cout << c->readFile();
+			trangThai = c->readFile();
 			break;
 		}
 		case 2: {
-			cout << c->writeFile();
+			trangThai = c->writeFile();
+			cin.ignore();
 			break;
 		}
 		case 3: {
-			cout << c->viewAllUser();
+			trangThai = c->viewAllUser();
+			cin.ignore();
+			cin.ignore();
 			break;
 		}
 		case 4: {
-			cout << c->themNhanVien();
+			trangThai = c->themNhanVien();
 			c->sortListtoID();
+			cin.ignore();
 			break;
 		}
 		case 5: {
-			cout << c->timNhanVien();
+			trangThai = c->timNhanVien();
+			cin.ignore();
 			break;
 		}
 		case 6: {
-			cout << c->timTheoSoThich();
+			trangThai = c->timTheoSoThich();
+			cin.ignore();
 			break;
 		}
 		case 7: {
-			cout << c->lietKeBanBe();
+			trangThai = c->lietKeBanBe();
+			cin.ignore();
+			cin.ignore();
 			break;
 		}
 		case 8: {
-			cout << c->xoaNhanVien();
+			trangThai = c->xoaNhanVien();
 			break;
 		}
 		case 9: {
@@ -65,14 +77,14 @@ int main() {
 			cout << "\n------------Them ban be-------------\n";
 			cout << "\nNhap vao ID nguoi can ket ban: ";
 			cin >> idBan;
-			cout << c->themBanBe(idBan);
+			trangThai = c->themBanBe(idBan);
 			break;
 		}
 		case 0: {
 			return 0;
 		}
 		default: {
-			cout << "Nhap sai cu phap, moi nhap lai. " << endl;
+			trangThai = "Nhap sai cu phap, moi nhap lai. ";
 			break;
 		}
 		}
