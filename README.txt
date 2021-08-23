@@ -2,6 +2,9 @@ Prj này Duy được làm cùng với bạn của Duy.
 Mục đích của Repo này là gì???
 Là để có proof rằng mình cũng biết chút chút Obj C++ chứ còn gì nữa :)
 
+À nhưng do một sự lười (có lý do chính đáng ☺) nên code hiện tại sẽ đọc dữ liệu từ User.txt và
+ghi lại vào User1.txt nha hihi :)
+
 -------------------------------------------------------------------------------------------------
 
 Để ứng dụng có thể hoạt động một cách hoàn chỉnh, vui lòng 
