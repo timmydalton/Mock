@@ -1,3 +1,9 @@
+Prj này Duy được làm cùng với bạn của Duy.
+Mục đích của Repo này là gì???
+Là để có proof rằng mình cũng biết chút chút Obj C++ chứ còn gì nữa :)
+
+-------------------------------------------------------------------------------------------------
+
 Để ứng dụng có thể hoạt động một cách hoàn chỉnh, vui lòng 
 đặt toàn bộ dữ liệu ở định dạng sau:
 
@@ -26,3 +32,6 @@ Notes:
 Input example:
 
 | 4 | huynh bao vu | 1 | FGA.IVI 3 | 45 | 171 | truyen tranh, gym, boi loi, bong ban |1, 2, 3, 7|
+
+-------------------------------------------------------------------------------------------------
+
