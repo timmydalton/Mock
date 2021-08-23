@@ -119,11 +119,11 @@ string Controller::readFile()
 {
 	ifstream file;
 	string line = "";
-	file.open("User.txt", ios::in); //đổi tên file thành User_long.txt
+	file.open("resource\\User.txt", ios::in); //đổi tên file thành User_long.txt
 									//nếu muốn danh sách dữ liệu có nhiều nhân viên
 	if (!file) return "\nKhong co file du lieu";
 	//else if (file) {
-	//	file.open("User1.txt", ios::in);
+	//	file.open("resource\\User1.txt", ios::in);
 	//	if (!file) return "Khong co file du lieu:";
 	//	else {
 	//		while (!file.eof()) {
@@ -162,7 +162,7 @@ string Controller::writeFile()
 		return "Khong co du lieu de ghi vao danh sach\n";
 	}
 	ofstream file;
-	file.open("User1.txt", ios::out | ios::trunc);
+	file.open("resource\\User1.txt", ios::out | ios::trunc);
 	for (auto i = listNV.begin(); i != listNV.end(); i++) {
 		file << (*i)->get();
 	}
